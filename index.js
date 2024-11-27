@@ -3,12 +3,13 @@ const fs = require('fs');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
 
 app.get('/courses', (req, res) => {
-  fs.readFile('signatureData.json', 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
     if (err) {
       return res.status(500).json({ message: 'Error al cargar los ramos' });
     }
