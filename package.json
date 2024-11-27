@@ -1,0 +1,19 @@
+{
+  "name": "signature-api",
+  "version": "1.0.0",
+  "description": "API for managing courses and attendance for RollCall QR",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["API", "courses", "attendance", "RollCall QR"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "^18.2.9",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "node-cron": "^3.0.3"
+  }
+}
