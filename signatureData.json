@@ -56,7 +56,6 @@
     "state": "Cursando",
     "teacher": "JOSE SANTOS JARA FUENTES",
     "totalClasses": 62,
-    "asistance": "75%",
     "asistencias": 0,
     "attendanceRate": 0
   },
@@ -69,7 +68,6 @@
     "state": "Cursando",
     "teacher": "CARLOS FERNANDO MARTINEZ SANCHEZ",
     "totalClasses": 30,
-    "asistance": "100%",
     "asistencias": 0,
     "attendanceRate": 0
   }
