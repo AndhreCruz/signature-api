@@ -8,6 +8,7 @@ const path = require('path');
 app.use(cors());
 app.use(express.json());
 
+// Obtiene todos los cursos
 app.get('/courses', (req, res) => {
   fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
     if (err) {
@@ -17,6 +18,7 @@ app.get('/courses', (req, res) => {
   });
 });
 
+// Obtiene un curso por ID
 app.get('/courses/:id', (req, res) => {
   const courseId = req.params.id;
 
@@ -36,9 +38,14 @@ app.get('/courses/:id', (req, res) => {
   });
 });
 
+// Actualiza las asistencias de un curso por ID
 app.put('/courses/:id/asistencias', (req, res) => {
   const courseId = req.params.id;
   const { asistencias } = req.body;
+
+  if (typeof asistencias !== 'number') {
+    return res.status(400).json({ message: 'Asistencias debe ser un número' });
+  }
 
   fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
     if (err) {
@@ -47,9 +54,9 @@ app.put('/courses/:id/asistencias', (req, res) => {
 
     let courses = JSON.parse(data);
     let course = courses.find(c => c.id === courseId);
-    
+
     if (course) {
-      course.asistencias = asistencias;  
+      course.asistencias = asistencias;
 
       fs.writeFile(path.join(__dirname, 'signatureData.json'), JSON.stringify(courses, null, 2), (err) => {
         if (err) {
@@ -63,9 +70,14 @@ app.put('/courses/:id/asistencias', (req, res) => {
   });
 });
 
+// Actualiza el porcentaje de asistencia de un curso por ID
 app.put('/courses/:id/attendanceRate', (req, res) => {
   const courseId = req.params.id;
   const { attendanceRate } = req.body;
+
+  if (typeof attendanceRate !== 'number') {
+    return res.status(400).json({ message: 'AttendanceRate debe ser un número' });
+  }
 
   fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
     if (err) {
@@ -74,9 +86,9 @@ app.put('/courses/:id/attendanceRate', (req, res) => {
 
     let courses = JSON.parse(data);
     let course = courses.find(c => c.id === courseId);
-    
+
     if (course) {
-      course.attendanceRate = attendanceRate;  
+      course.attendanceRate = attendanceRate;
 
       fs.writeFile(path.join(__dirname, 'signatureData.json'), JSON.stringify(courses, null, 2), (err) => {
         if (err) {
