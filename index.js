@@ -179,11 +179,23 @@ app.put('/courses/:id/attendanceRate', (req, res) => {
 
 // Restablece los cursos a sus valores por defecto
 app.post('/reset-courses', (req, res) => {
-  fs.writeFile(path.join(__dirname, 'signatureData.json'), JSON.stringify(defaultData, null, 2), (err) => {
+  fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
     if (err) {
-      return res.status(500).json({ message: 'Error al restablecer los cursos' });
+      return res.status(500).json({ message: 'Error al cargar los ramos'} );
     }
-    res.json({ message: 'Cursos restablecidos a sus valores por defecto' });
+
+    let courses = JSON.parse(data);
+    courses.forEach(course => {
+      course.asistencias = 0
+      course.attendanceRate = 0;
+    });  
+    
+    fs.writeFile(path.join(__dirname, 'signatureData.json'), JSON.stringify(courses, null, 2), (err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error al restablecer los ramos'});
+      }
+      res.json({ message: 'Ramos restablecidos correctamente', courses });
+    });
   });
 });
 
