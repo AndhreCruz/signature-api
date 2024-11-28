@@ -21,7 +21,7 @@ app.put('/courses/:id/asistencias', (req, res) => {
   const courseId = req.params.id;
   const { asistencias } = req.body;
 
-  fs.readFile('signatureData.json', 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
     if (err) {
       return res.status(500).json({ message: 'Error al cargar los ramos' });
     }
@@ -30,9 +30,9 @@ app.put('/courses/:id/asistencias', (req, res) => {
     let course = courses.find(c => c.id === courseId);
     
     if (course) {
-      course.asistencias = asistencias;
+      course.asistencias = asistencias;  
 
-      fs.writeFile('signatureData.json', JSON.stringify(courses, null, 2), (err) => {
+      fs.writeFile(path.join(__dirname, 'signatureData.json'), JSON.stringify(courses, null, 2), (err) => {
         if (err) {
           return res.status(500).json({ message: 'Error al guardar las asistencias' });
         }
@@ -48,7 +48,7 @@ app.put('/courses/:id/attendanceRate', (req, res) => {
   const courseId = req.params.id;
   const { attendanceRate } = req.body;
 
-  fs.readFile('signatureData.json', 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
     if (err) {
       return res.status(500).json({ message: 'Error al cargar los ramos' });
     }
@@ -57,9 +57,9 @@ app.put('/courses/:id/attendanceRate', (req, res) => {
     let course = courses.find(c => c.id === courseId);
     
     if (course) {
-      course.attendanceRate = attendanceRate;
+      course.attendanceRate = attendanceRate;  
 
-      fs.writeFile('signatureData.json', JSON.stringify(courses, null, 2), (err) => {
+      fs.writeFile(path.join(__dirname, 'signatureData.json'), JSON.stringify(courses, null, 2), (err) => {
         if (err) {
           return res.status(500).json({ message: 'Error al guardar el porcentaje de asistencia' });
         }
