@@ -17,6 +17,25 @@ app.get('/courses', (req, res) => {
   });
 });
 
+app.get('/courses/:id', (req, res) => {
+  const courseId = req.params.id;
+
+  fs.readFile(path.join(__dirname, 'signatureData.json'), 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al cargar los ramos' });
+    }
+
+    let courses = JSON.parse(data);
+    let course = courses.find(c => c.id === courseId);
+
+    if (course) {
+      res.json(course);
+    } else {
+      res.status(404).json({ message: 'Ramo no encontrado' });
+    }
+  });
+});
+
 app.put('/courses/:id/asistencias', (req, res) => {
   const courseId = req.params.id;
   const { asistencias } = req.body;
